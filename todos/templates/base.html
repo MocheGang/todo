@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Todo Liste</title>
+    <meta charset="utf-8">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .todo-item { padding: 10px; margin: 5px; border: 1px solid #ddd; }
+        .completed { text-decoration: line-through; opacity: 0.6; }
+        .btn { padding: 5px 10px; margin: 2px; text-decoration: none; }
+        .btn-add { background: green; color: white; }
+        .btn-toggle { background: blue; color: white; }
+        .btn-delete { background: red; color: white; }
+    </style>
+</head>
+<body>
+    <h1>Ma Todo Liste</h1>
+    {% block content %}
+    {% endblock %}
+</body>
+</html>
