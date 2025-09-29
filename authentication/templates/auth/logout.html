@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Déconnexion{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="alert alert-info text-center shadow-sm mt-5">
+            Vous êtes déconnecté. <a href="{% url 'accounts:login' %}" class="alert-link">Se reconnecter</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
