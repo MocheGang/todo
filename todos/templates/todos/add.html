@@ -1,7 +1,268 @@
+<!-- todos/templates/todos/todos/create.html -->
 {% extends 'base.html' %}
+
+{% block title %}Ajouter une tâche - Todo Liste{% endblock %}
+
 {% block content %}
-<h2>add todo met ton formulair en bas du h1 </h2>
+<div class="row justify-content-center">
+    <div class="col-lg-8 col-xl-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">
+                    <i class="bi bi-plus-circle me-2"></i>
+                    Ajouter une nouvelle tâche
+                </h4>
+                <small class="opacity-75">Dans la page : {{ page.title }}</small>
+            </div>
+            
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <!-- Titre -->
+                    <div class="mb-4">
+                        <label for="title" class="form-label fw-bold">
+                            <i class="bi bi-pencil-fill text-primary me-2"></i>
+                            Titre de la tâche <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" 
+                               class="form-control form-control-lg" 
+                               id="title" 
+                               name="title" 
+                               placeholder="Ex: Faire les courses, Appeler le médecin..."
+                               required 
+                               autofocus>
+                        <div class="form-text">
+                            <i class="bi bi-info-circle me-1"></i>
+                            Donnez un titre clair et concis à votre tâche
+                        </div>
+                    </div>
+                    
+                    <!-- Description -->
+                    <div class="mb-4">
+                        <label for="description" class="form-label fw-bold">
+                            <i class="bi bi-text-paragraph text-info me-2"></i>
+                            Description (optionnelle)
+                        </label>
+                        <textarea class="form-control" 
+                                  id="description" 
+                                  name="description" 
+                                  rows="4"
+                                  placeholder="Ajoutez des détails sur cette tâche..."></textarea>
+                        <div class="form-text">
+                            <i class="bi bi-info-circle me-1"></i>
+                            Ajoutez des notes ou détails supplémentaires si nécessaire
+                        </div>
+                    </div>
+                    
+                    <!-- Priorité -->
+                    <div class="mb-4">
+                        <label for="priority" class="form-label fw-bold">
+                            <i class="bi bi-exclamation-triangle-fill text-warning me-2"></i>
+                            Priorité
+                        </label>
+                        <select class="form-select" id="priority" name="priority">
+                            <option value="low">
+                                <i class="bi bi-arrow-down-circle"></i> Faible
+                            </option>
+                            <option value="medium" selected>
+                                <i class="bi bi-dash-circle"></i> Moyenne
+                            </option>
+                            <option value="high">
+                                <i class="bi bi-arrow-up-circle"></i> Élevée
+                            </option>
+                            <option value="urgent">
+                                <i class="bi bi-exclamation-circle"></i> Urgente
+                            </option>
+                        </select>
+                        <div class="form-text">
+                            <i class="bi bi-info-circle me-1"></i>
+                            Définissez le niveau d'importance de cette tâche
+                        </div>
+                    </div>
+                    
+                    <!-- Date d'échéance -->
+                    <div class="mb-4">
+                        <label for="due_date" class="form-label fw-bold">
+                            <i class="bi bi-calendar-event text-danger me-2"></i>
+                            Date d'échéance (optionnelle)
+                        </label>
+                        <input type="datetime-local" 
+                               class="form-control" 
+                               id="due_date" 
+                               name="due_date">
+                        <div class="form-text">
+                            <i class="bi bi-info-circle me-1"></i>
+                            Définissez une date limite pour cette tâche
+                        </div>
+                    </div>
+                    
+                    <!-- Aperçu de la priorité -->
+                    <div class="mb-4">
+                        <div class="alert alert-light border">
+                            <h6 class="mb-2">
+                                <i class="bi bi-eye me-2"></i>Aperçu
+                            </h6>
+                            <div class="d-flex align-items-center">
+                                <input type="checkbox" class="form-check-input me-3" disabled>
+                                <div class="flex-grow-1">
+                                    <strong id="preview-title">Titre de la tâche</strong>
+                                    <p class="mb-0 small text-muted" id="preview-desc">Description...</p>
+                                </div>
+                                <span class="badge" id="preview-badge">Moyenne</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Boutons d'action -->
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="{% url 'page_detail' page.id %}" class="btn btn-outline-secondary">
+                            <i class="bi bi-x-circle me-2"></i>
+                            Annuler
+                        </a>
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="bi bi-check-circle me-2"></i>
+                            Créer la tâche
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Conseils -->
+        <div class="card mt-3 border-info">
+            <div class="card-body">
+                <h6 class="text-info mb-2">
+                    <i class="bi bi-lightbulb-fill me-2"></i>
+                    Conseils pour une bonne tâche
+                </h6>
+                <ul class="small mb-0">
+                    <li>Utilisez des verbes d'action (Appeler, Acheter, Terminer...)</li>
+                    <li>Soyez spécifique et mesurable</li>
+                    <li>Définissez une priorité réaliste</li>
+                    <li>Ajoutez une date limite pour les tâches importantes</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 
+<style>
+/* Styles pour les badges de priorité dans l'aperçu */
+.badge-low {
+    background-color: #28a745;
+}
 
+.badge-medium {
+    background-color: #ffc107;
+    color: #000;
+}
 
-{%endblock%}
+.badge-high {
+    background-color: #fd7e14;
+}
+
+.badge-urgent {
+    background-color: #dc3545;
+}
+
+/* Animation pour le formulaire */
+.card {
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Style pour les champs requis */
+.form-control:focus, .form-select:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+</style>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Aperçu en temps réel de la tâche
+document.addEventListener('DOMContentLoaded', function() {
+    const titleInput = document.getElementById('title');
+    const descInput = document.getElementById('description');
+    const prioritySelect = document.getElementById('priority');
+    
+    const previewTitle = document.getElementById('preview-title');
+    const previewDesc = document.getElementById('preview-desc');
+    const previewBadge = document.getElementById('preview-badge');
+    
+    // Couleurs des badges par priorité
+    const priorityColors = {
+        'low': { class: 'badge-low', text: 'Faible' },
+        'medium': { class: 'badge-medium', text: 'Moyenne' },
+        'high': { class: 'badge-high', text: 'Élevée' },
+        'urgent': { class: 'badge-urgent', text: 'Urgente' }
+    };
+    
+    // Mise à jour du titre
+    titleInput.addEventListener('input', function() {
+        previewTitle.textContent = this.value || 'Titre de la tâche';
+    });
+    
+    // Mise à jour de la description
+    descInput.addEventListener('input', function() {
+        if (this.value) {
+            previewDesc.textContent = this.value.substring(0, 100) + (this.value.length > 100 ? '...' : '');
+            previewDesc.style.display = 'block';
+        } else {
+            previewDesc.textContent = 'Description...';
+            previewDesc.style.display = 'block';
+        }
+    });
+    
+    // Mise à jour de la priorité
+    prioritySelect.addEventListener('change', function() {
+        const priority = this.value;
+        const priorityInfo = priorityColors[priority];
+        
+        // Mettre à jour le badge
+        previewBadge.className = 'badge ' + priorityInfo.class;
+        previewBadge.textContent = priorityInfo.text;
+    });
+    
+    // Validation du formulaire
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function(e) {
+        const title = titleInput.value.trim();
+        
+        if (!title) {
+            e.preventDefault();
+            alert('Le titre de la tâche est obligatoire !');
+            titleInput.focus();
+            return false;
+        }
+        
+        // Animation du bouton de soumission
+        const submitBtn = form.querySelector('button[type="submit"]');
+        submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Création...';
+        submitBtn.disabled = true;
+    });
+    
+    // Définir la date minimale pour la date d'échéance (aujourd'hui)
+    const dueDateInput = document.getElementById('due_date');
+    const now = new Date();
+    now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+    dueDateInput.min = now.toISOString().slice(0, 16);
+    
+    // Auto-focus sur le champ titre
+    titleInput.focus();
+});
+</script>
+{% endblock %}

@@ -1,6 +1,56 @@
+<!-- todos/templates/todos/todos/create.html -->
 {% extends 'base.html' %}
+
+{% block title %}Ajouter une tâche - Todo Liste{% endblock %}
+
 {% block content %}
-<h2>Meme chose ici</h2>
+<h2>Ajouter une nouvelle tâche</h2>
 
+<div class="card mt-4">
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            
+            <!-- Titre -->
+            <div class="mb-3">
+                <label for="title" class="form-label">Titre de la tâche <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="title" name="title" required placeholder="Ex: Faire les courses">
+            </div>
+            
+            <!-- Description -->
+            <div class="mb-3">
+                <label for="description" class="form-label">Description (optionnelle)</label>
+                <textarea class="form-control" id="description" name="description" rows="3" placeholder="Ajoutez des détails..."></textarea>
+            </div>
+            
+            <!-- Priorité -->
+            <div class="mb-3">
+                <label for="priority" class="form-label">Priorité</label>
+                <select class="form-select" id="priority" name="priority">
+                    <option value="low">Faible</option>
+                    <option value="medium" selected>Moyenne</option>
+                    <option value="high">Élevée</option>
+                    <option value="urgent">Urgente</option>
+                </select>
+            </div>
+            
+            <!-- Date d'échéance -->
+            <div class="mb-3">
+                <label for="due_date" class="form-label">Date d'échéance (optionnelle)</label>
+                <input type="datetime-local" class="form-control" id="due_date" name="due_date">
+            </div>
+            
+            <!-- Boutons -->
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check-circle me-2"></i>Créer la tâche
+                </button>
+                <a href="{% url 'page_detail' page.id %}" class="btn btn-secondary">
+                    <i class="bi bi-x-circle me-2"></i>Annuler
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
 
-{%endblock%}
+{% endblock %}
