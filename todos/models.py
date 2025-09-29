@@ -78,12 +78,8 @@ class Todo(models.Model):
     )
     
     # Relation avec la page (et donc indirectement avec l'utilisateur)
-    page = models.ForeignKey(
-        Page, 
-        on_delete=models.CASCADE, 
-        related_name='todos',
-        verbose_name="Page"
-    )
+    page = models.ForeignKey("Page", on_delete=models.CASCADE, null=True, blank=True)
+
     
     # Dates
     created_at = models.DateTimeField(default=timezone.now, verbose_name="Créé le")

@@ -1,6 +1,28 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% block content %}
-<h2>salut + ton code pour cette page met ca en bas</h2>
+<h1>Ma Todo List</h1>
 
+<a href="{% url 'add_todo' %}" class="btn-light text-decoration-none" > Ajouter une tâche</a>
 
-{%endblock%}
+<ul>
+    {% for todo in todos %}
+        <li>
+            {% if todo.completed %}
+                <s>{{ todo.title }}</s>
+            {% else %}
+                {{ todo.title }}
+            {% endif %}
+            - {{ todo.description }}
+
+            <!-- Boutons d’action -->
+            <a href="{% url 'toggle_todo' todo.id %}" class="text-decoration-none">
+                {% if todo.completed %} Non terminé{% else %}☑️ Terminer{% endif %}
+            </a>
+            |
+            <a href="{% url 'delete_todo' todo.id %}" onclick="return confirm('Supprimer cette tâche ?');" class="text-decoration-none" >🗑️Supprimer</a>
+        </li>
+    {% empty %}
+        <li>Aucune tâche pour le moment.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

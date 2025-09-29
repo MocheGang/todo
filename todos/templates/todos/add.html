@@ -1,7 +1,17 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% block content %}
-<h2>add todo met ton formulair en bas du h1 </h2>
+<h1>Ajouter une nouvelle tâche</h1>
 
+<form method="post">
+    {% csrf_token %}
+    <label for="title">Titre :</label>
+    <input type="text" id="title" name="title" required><br><br>
 
+    <label for="description">Description :</label><br>
+    <textarea id="description" name="description"></textarea><br><br>
 
-{%endblock%}
+    <button type="submit" class="btn bg-success btn-sm">Enregistrer</button>
+</form>
+
+<a href="{% url 'todo_list' %}" class="btn-outline-light text-decoration-none mt-10">voir liste</a>
+{% endblock %}

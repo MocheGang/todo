@@ -27,4 +27,4 @@ def delete_todo(request, todo_id):
     todo = get_object_or_404(Todo, id=todo_id)
     todo.delete()
     return redirect('todo_list')
-# Create your views here.
+
